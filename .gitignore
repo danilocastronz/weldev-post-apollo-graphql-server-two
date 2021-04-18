@@ -1,0 +1,14 @@
+# npm
+node_modules
+package-lock.json
+
+# local setup
+.vscode
+
+# environment variables
+.env
+
+# Logs
+logs
+*.log
+npm-debug.log*
