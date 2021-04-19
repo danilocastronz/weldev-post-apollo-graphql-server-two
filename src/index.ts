@@ -1,7 +1,7 @@
-const { ApolloServer } = require('apollo-server');
+import { ApolloServer } from 'apollo-server';
 
 // import schema definition
-const schema = require('./graphql/schema.ts');
+import schema from './graphql/schema';
 
 // define the Apollo Server instance
 const server = new ApolloServer({ schema });

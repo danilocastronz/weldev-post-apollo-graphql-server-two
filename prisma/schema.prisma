@@ -11,6 +11,7 @@ model Company {
   id Int @default(autoincrement()) @id
   name String
   description String?
+  founder String?
   branches Branch[]
 }
 

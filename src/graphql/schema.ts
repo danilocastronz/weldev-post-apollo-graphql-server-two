@@ -1,14 +1,13 @@
-const { gql, makeExecutableSchema } = require('apollo-server');
+import { PrismaClient } from '@prisma/client';
 
-// import mocked data
-const companies = require('../data/company.ts');
-const branches = require('../data/branch.ts');
-const employees = require('../data/employee.ts');
+const prisma = new PrismaClient();
+
+import { gql, makeExecutableSchema } from 'apollo-server';
 
 const typeDefs = gql`
   # This "Company" type defines the queryable fields for every company in our data source.
   type Company {
-    id: ID!
+    id: Int!
     name: String!
     description: String
     branches: [Branch]
@@ -16,7 +15,7 @@ const typeDefs = gql`
 
   # This "Branch" type defines the queryable fields for every branch in our data source.
   type Branch {
-    id: ID!
+    id: Int!
     title: String!
     city: String
     country: String
@@ -26,7 +25,7 @@ const typeDefs = gql`
 
   # This "Employee" type defines the queryable fields for every employee in our data source.
   type Employee {
-    id: ID!
+    id: Int!
     firstName: String!
     lastName: String!
     role: String
@@ -38,14 +37,19 @@ const typeDefs = gql`
     companies: [Company]
     branches: [Branch]
     employees: [Employee]
+    company(id: Int!): Company
   }
 `;
 
 const resolvers = {
   Query: {
-    companies: () => companies,
-    branches: () => branches,
-    employees: () => employees,
+    companies: () => prisma.company.findMany({ include: { branches: true } }),
+    branches: () => prisma.branch.findMany(),
+    employees: () => prisma.employee.findMany(),
+    company: (_parent: any, args: any) =>
+      prisma.company.findUnique({
+        where: { id: args.id },
+      }),
   },
 };
 
@@ -54,4 +58,4 @@ const schemaDef = makeExecutableSchema({
   resolvers,
 });
 
-module.exports = schemaDef;
+export default schemaDef;
