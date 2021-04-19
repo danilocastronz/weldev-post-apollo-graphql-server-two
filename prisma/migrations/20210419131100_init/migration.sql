@@ -25,9 +25,3 @@ CREATE TABLE "Employee" (
     "branchId" INTEGER NOT NULL,
     FOREIGN KEY ("branchId") REFERENCES "Branch" ("id") ON DELETE CASCADE ON UPDATE CASCADE
 );
-
--- CreateIndex
-CREATE UNIQUE INDEX "Branch.companyId_unique" ON "Branch"("companyId");
-
--- CreateIndex
-CREATE UNIQUE INDEX "Employee.branchId_unique" ON "Employee"("branchId");
