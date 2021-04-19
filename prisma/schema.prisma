@@ -21,7 +21,7 @@ model Branch {
   city String?
   country String
   company Company @relation(fields: [companyId], references: [id])
-  companyId Int @unique
+  companyId Int
   employees Employee[]
 }
 
@@ -31,5 +31,5 @@ model Employee {
   lastName String
   role String?
   branch Branch @relation(fields: [branchId], references: [id])
-  branchId Int @unique
+  branchId Int
 }
